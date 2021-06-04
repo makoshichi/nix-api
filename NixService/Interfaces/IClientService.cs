@@ -7,7 +7,7 @@ namespace NixService
 {
     public interface IClientService
     {
-        Task<string> SaveAsync(ClientDto client);
+        Task<ClientDto> SaveAsync(ClientDto client);
 
         IEnumerable<ClientDto> GetClients();
     }

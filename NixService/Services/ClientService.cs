@@ -19,7 +19,7 @@ namespace NixService.Services
             _mapper = mapper;
         }
 
-        public async Task<string> SaveAsync(ClientDto clientDto)
+        public async Task<ClientDto> SaveAsync(ClientDto clientDto)
         {
             var client = new Client()
             {
@@ -32,9 +32,7 @@ namespace NixService.Services
 
             await _repository.SaveAsync(client);
 
-            return @$"Conta criada com sucesso para o cliente {client.ClientName}.  
-                      Número da Conta: {client.AccountNumber}. Fundo inicial: {client.Funds}  
-                      Cartão de Crédito: {client.CreditCardNumber}. Limite: {client.CreditCardLimit}";
+            return _mapper.Map<ClientDto>(client);
         }
 
         public IEnumerable<ClientDto> GetClients()

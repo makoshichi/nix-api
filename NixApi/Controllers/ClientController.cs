@@ -20,7 +20,9 @@ namespace NixWeb.Controllers
         [HttpPost("OpenAccount")]
         public async Task<IActionResult> OpenAccount([FromBody] ClientDto client)
         {
-            return Ok(await _service.SaveAsync(client)); // As exceções são gerenciadas pelo HttpResponseExceptionFilter
+            client = await _service.SaveAsync(client);
+            var response = $"Conta criada com sucesso para o cliente {client.ClientName}.\r\nNúmero da Conta: {client.AccountNumber}. Fundo inicial: {client.Funds}\r\nCartão de Crédito: {client.CreditCardNumber}. Limite: {client.CreditCardLimit}";
+            return Ok(response); // As exceções são gerenciadas pelo HttpResponseExceptionFilter
         }
 
         [HttpGet("GetClients")]
