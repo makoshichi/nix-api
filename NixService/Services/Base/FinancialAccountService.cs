@@ -32,7 +32,7 @@ namespace NixService.Services.Base
 
         public async Task<StatusCodeResult> Purchase(PurchaseDto purchase)
         {
-            var client = await clientRepository.GetClient(GetPaymentTypeFilter(purchase.PaymentMethodNumber));
+            var client = await clientRepository.GetClient(GetPaymentFilter(purchase.PaymentMethodNumber));
 
             ValidateOperation(client, purchase.Value);
 
@@ -43,27 +43,31 @@ namespace NixService.Services.Base
             return new StatusCodeResult((int)HttpStatusCode.OK);
         }
 
-        public StatementDto<TEntityDto> GetStatement(int paymentMethodNumber, DateTime startDate, DateTime endDate)
+        public async Task<StatementDto<TEntityDto>> GetStatement(StatementFilterDto filter)
         {
-            var client = clientRepository.GetClient(GetPaymentTypeFilter(paymentMethodNumber));
+            var client = await clientRepository.GetClient(GetPaymentFilter(filter.PaymentMethodNumber));
 
-            var initialValue = accountRepository.GetStatements().Where(x => x.ClientId == client.Id && x.PurchaseDate < startDate).Select(x => x.PurchaseValue).Sum();
-            var FinalValue = accountRepository.GetStatements().Where(x => x.ClientId == client.Id && x.PurchaseDate < endDate).Select(x => x.PurchaseValue).Sum();
-            var statements = accountRepository.GetStatements().Where((x => x.ClientId == client.Id && x.PurchaseDate >= startDate && x.PurchaseDate >= endDate));
+            var initialValue = accountRepository.GetStatements().Where(x => x.ClientId == client.Id && x.PurchaseDate < filter.InitialDate).Select(x => x.PurchaseValue).Sum();
+            var finalValue = accountRepository.GetStatements().Where(x => x.ClientId == client.Id && x.PurchaseDate < filter.FinalDate).Select(x => x.PurchaseValue).Sum();
+            var statements = accountRepository.GetStatements().Where((x => x.ClientId == client.Id && x.PurchaseDate >= filter.InitialDate && x.PurchaseDate <= filter.FinalDate));
+
+            var tuple = ComputeStatementFunds(client, initialValue, finalValue);
 
             return new StatementDto<TEntityDto>
             {
-                InitialValue = initialValue,
-                FinalValue = FinalValue,
+                InitialValue = tuple.Initial,
+                FinalValue = tuple.Final,
                 Statements = ConvertToDtoIEnumerable(statements)
             };
         }
 
-        protected abstract Expression<Func<TEntity, bool>> GetPaymentTypeFilter(long paymentMethodNumber);
+        protected abstract Expression<Func<Client, bool>> GetPaymentFilter(long paymentMethodNumber);
 
         protected abstract void ValidateOperation(Client client, decimal purchaseValue);
 
         protected abstract TEntity CreateEntry(Client client, PurchaseDto purchase);
+
+        protected abstract (decimal Initial, decimal Final) ComputeStatementFunds(Client client, decimal initialValue, decimal finalValue);
 
         protected IEnumerable<TEntityDto> ConvertToDtoIEnumerable(IEnumerable<TEntity> collection)
         {

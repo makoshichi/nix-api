@@ -33,7 +33,7 @@ namespace NixService.Services
             await _repository.SaveAsync(client);
 
             return @$"Conta criada com sucesso para o cliente {client.ClientName}.  
-                      Número da Conta: {client.AccountNumber}. Fundos: {client.Funds}  
+                      Número da Conta: {client.AccountNumber}. Fundo inicial: {client.Funds}  
                       Cartão de Crédito: {client.CreditCardNumber}. Limite: {client.CreditCardLimit}";
         }
 

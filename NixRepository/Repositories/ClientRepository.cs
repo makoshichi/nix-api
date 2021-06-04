@@ -21,21 +21,9 @@ namespace NixRepository.Repositories
             _context = context;
         }
 
-        public async Task<Client> GetClient<TEntity>(Expression<Func<TEntity, bool>> paymentMethodExpression) where TEntity : BaseAccount
+        public async Task<Client> GetClient(Expression<Func<Client, bool>> paymentMethodExpression)
         {
-            var client = await _context.Set<TEntity>().Where(paymentMethodExpression).Join(
-                    _context.Clients,
-                    d => d.ClientId,
-                    c => c.Id,
-                    (d, c) => new Client
-                    {
-                        ClientName = c.ClientName,
-                        CreditCardLimit = c.CreditCardLimit,
-                        CreditCardNumber = c.CreditCardNumber,
-                        AccountNumber = c.AccountNumber,
-                        Funds = c.Funds,
-                        Id = c.Id
-                    }).FirstOrDefaultAsync();
+            var client = await _context.Clients.Where(paymentMethodExpression).FirstOrDefaultAsync();
 
             if (client == null)
                 throw new HttpResponseException(System.Net.HttpStatusCode.NotFound, "Método de pagamento não encontrado para o cliente.");

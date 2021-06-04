@@ -28,9 +28,9 @@ namespace NixWeb.Controllers.Base
             return Ok("Transação efetuada com sucesso"); // As exceções são gerenciadas pelo HttpResponseExceptionFilter
         }      
 
-        public virtual IActionResult GetStatement(int paymentMethodNumber, DateTime startDate, DateTime endDate)
+        public virtual async Task<IActionResult> GetStatement(StatementFilterDto filter)
         {
-            var response = JsonConvert.SerializeObject(service.GetStatement(paymentMethodNumber, startDate, endDate)); 
+            var response = JsonConvert.SerializeObject(await service.GetStatement(filter)); 
             return Ok(response);
         }
     }

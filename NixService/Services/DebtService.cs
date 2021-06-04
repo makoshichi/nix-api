@@ -21,14 +21,16 @@ namespace NixService.Services
         {
         }
 
-        protected override Expression<Func<TEntity, bool>> GetPaymentTypeFilter(long accountNumber)
+        protected override Expression<Func<Client, bool>> GetPaymentFilter(long paymentMethodNumber)
         {
-            return (x => x.AccountNumber == accountNumber);
+            return (x => x.AccountNumber == paymentMethodNumber);
         }
 
         protected override void ValidateOperation(Client client, decimal purchaseValue)
         {
-            if (client.Funds - purchaseValue < 0)
+            var spent = accountRepository.GetStatements().Where(x => x.ClientId == client.Id).Select(x => x.PurchaseValue).Sum();
+
+            if (client.Funds - spent - purchaseValue < 0)
                 throw new HttpResponseException(HttpStatusCode.Unauthorized, "Transação não autorizada");
         }
 
@@ -42,6 +44,11 @@ namespace NixService.Services
                 PurchaseValue = purchase.Value,
                 PurchaseDate = DateTime.Now
             };
+        }
+
+        protected override (decimal Initial, decimal Final) ComputeStatementFunds(Client client, decimal initialValue, decimal finalValue)
+        {
+            return (client.Funds - initialValue, client.Funds - finalValue);
         }
     }
 }

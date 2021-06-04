@@ -19,10 +19,9 @@ namespace NixService.Services
             : base(accountRepository, clientAccountRepository, mapper)
         {
         }
-
-        protected override Expression<Func<TEntity, bool>> GetPaymentTypeFilter(long creditCardNumber)
+        protected override Expression<Func<Client, bool>> GetPaymentFilter(long paymentMethodNumber)
         {
-            return (x => x.CreditCardNumber == creditCardNumber);
+            return (x => x.CreditCardNumber == paymentMethodNumber);
         }
 
         protected override void ValidateOperation(Client client, decimal purchaseValue)
@@ -45,6 +44,11 @@ namespace NixService.Services
                 PurchaseValue = purchase.Value,
                 PurchaseDate = DateTime.Now
             };
+        }
+
+        protected override (decimal Initial, decimal Final) ComputeStatementFunds(Client client, decimal initialValue, decimal finalValue)
+        {
+            return (client.CreditCardLimit - initialValue, client.CreditCardLimit - finalValue);
         }
     }
 }

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using NixService;
 using NixService.DTOs;
 using NixWeb.Controllers.Base;
-using System;
 using System.Threading.Tasks;
 
 namespace NixWeb.Controllers
@@ -16,16 +15,16 @@ namespace NixWeb.Controllers
         {
         }
 
-        [HttpPost]
+        [HttpPost("Purchase")]
         public override async Task<IActionResult> Purchase([FromBody] PurchaseDto purchase)
         {
             return await base.Purchase(purchase);
         }
 
-        [HttpGet("{id}")]
-        public override IActionResult GetStatement(int accountNumber, DateTime startDate, DateTime endDate)
+        [HttpPost("GetStatement")]
+        public override async Task<IActionResult> GetStatement([FromBody] StatementFilterDto filter)
         {
-            return base.GetStatement(accountNumber, startDate, endDate);
+            return await base.GetStatement(filter);
         }
     }
 }
