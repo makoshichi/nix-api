@@ -16,8 +16,8 @@ namespace NixService.Services
         where TEntityDto : DebtAccountDto
     {
 
-        public DebtService(IFinancialAccountRepository<TEntity> statementRepository, IClientRepository clientAccountRepository, IMapper mapper)
-            : base(statementRepository, clientAccountRepository, mapper)
+        public DebtService(IFinancialAccountRepository<TEntity> accountRepository, IClientRepository clientRepository, IMapper mapper)
+            : base(accountRepository, clientRepository, mapper)
         {
         }
 
@@ -41,20 +41,6 @@ namespace NixService.Services
                 Description = purchase.Description,
                 PurchaseValue = purchase.Value,
                 PurchaseDate = DateTime.Now
-            };
-        }
-
-        public override StatementDTO<TEntityDto> GetStatement(int paymentMethodNumber, DateTime startDate, DateTime endDate)
-        {
-            var startFunds = accountRepository.GetStatements().Where(x => x.AccountNumber == paymentMethodNumber && x.PurchaseDate < startDate).Select(x => x.PurchaseValue).Sum();
-            var finalFunds = accountRepository.GetStatements().Where(x => x.AccountNumber == paymentMethodNumber && x.PurchaseDate < endDate).Select(x => x.PurchaseValue).Sum();
-            var statements = accountRepository.GetStatements().Where((x => x.AccountNumber == paymentMethodNumber && x.PurchaseDate >= startDate && x.PurchaseDate >= endDate));
-
-            return new StatementDTO<TEntityDto>
-            {
-                StartFunds = startFunds,
-                FinalFunds = finalFunds,
-                Statements = ConvertToDtoIEnumerable(statements)
             };
         }
     }

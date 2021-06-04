@@ -5,6 +5,7 @@ using NixService.DTOs;
 using NixService.Services.Base;
 using NixUtil.Exceptions;
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 
@@ -14,8 +15,8 @@ namespace NixService.Services
         where TEntity : CreditAccount, new()
         where TEntityDto : CreditAccountDto
     {
-        public CreditService(IFinancialAccountRepository<TEntity> statementRepository, IClientRepository clientAccountRepository, IMapper mapper) 
-            : base(statementRepository, clientAccountRepository, mapper)
+        public CreditService(IFinancialAccountRepository<TEntity> accountRepository, IClientRepository clientAccountRepository, IMapper mapper) 
+            : base(accountRepository, clientAccountRepository, mapper)
         {
         }
 
@@ -27,11 +28,10 @@ namespace NixService.Services
         protected override void ValidateOperation(Client client, decimal purchaseValue)
         {
 
-            // Para fins deste desafio, estipula-se que O vencimento do cartão é no dia primeiro de cada mês
+            // Para fins deste desafio, estipula-se o calculo apenas sobre o limite do cartão, ignorando fechamento e emissão de faturas mensais
+            var spent = accountRepository.GetStatements().Where(x => x.ClientId == client.Id).Select(x => x.PurchaseValue).Sum();
 
-            //var currentDebt = statementRepository.Ge
-
-            if (client.Funds - purchaseValue < 0)
+            if (purchaseValue + spent > client.CreditCardLimit)
                 throw new HttpResponseException(HttpStatusCode.Unauthorized, "Transação não autorizada");
         }
 
@@ -45,11 +45,6 @@ namespace NixService.Services
                 PurchaseValue = purchase.Value,
                 PurchaseDate = DateTime.Now
             };
-        }
-
-        public override StatementDTO<TEntityDto> GetStatement(int paymentMethodNumber, DateTime startDate, DateTime endDate)
-        {
-            throw new NotImplementedException();
         }
     }
 }

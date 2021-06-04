@@ -17,8 +17,6 @@ namespace NixRepository.Repositories
             this.context = context;
         }
 
-        public abstract IEnumerable<TEntity> GetStatement(int paymentMethodNumber, DateTime startDate, DateTime endDate);
-
         public IEnumerable<TEntity> GetStatements()
         {
             return context.Set<TEntity>();

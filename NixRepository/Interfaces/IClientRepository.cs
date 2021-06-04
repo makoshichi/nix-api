@@ -9,11 +9,13 @@ namespace NixRepository
 {
     public interface IClientRepository
     {
-        // Como optei por não usar Id do banco como número da conta/número cartão, achou-se necessário criar uma forma de obter o Id do cliente
+        // Como não há autenticação, obtem-se o cliente a partir do número da conta ou cartão
         Task<Client> GetClient<TEntity>(Expression<Func<TEntity, bool>> chargeMethodExpression) where TEntity : BaseAccount;
 
         Task<Client> GetClient(int clientId);
 
         IEnumerable<Client> GetClients();
+
+        Task SaveAsync(Client client);
     }
 }

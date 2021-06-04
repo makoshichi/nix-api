@@ -10,8 +10,6 @@ namespace NixRepository
     {
         Task SaveAsync(TEntity entity);
 
-        IEnumerable<TEntity> GetStatement(int clientId, DateTime startDate, DateTime endDate);
-
         IEnumerable<TEntity> GetStatements();
     }
 }

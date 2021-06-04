@@ -6,8 +6,8 @@ using NixRepository;
 using NixService.DTOs;
 using NixService.DTOs.Base;
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Threading.Tasks;
@@ -19,20 +19,20 @@ namespace NixService.Services.Base
         where TEntityDto : BaseAccountDto
     {
         protected IFinancialAccountRepository<TEntity> accountRepository;
-        protected IClientRepository clientAccountRepository;
+        protected IClientRepository clientRepository;
 
         readonly IMapper _mapper;
 
-        public FinancialAccountService(IFinancialAccountRepository<TEntity> accountRepository, IClientRepository clientAccountRepository, IMapper mapper)
+        public FinancialAccountService(IFinancialAccountRepository<TEntity> accountRepository, IClientRepository clientRepository, IMapper mapper)
         {
-            this.clientAccountRepository = clientAccountRepository;
+            this.clientRepository = clientRepository;
             this.accountRepository = accountRepository;
             _mapper = mapper;
         }
 
         public async Task<StatusCodeResult> Purchase(PurchaseDto purchase)
         {
-            var client = await clientAccountRepository.GetClient(GetPaymentTypeFilter(purchase.PaymentMethodNumber));
+            var client = await clientRepository.GetClient(GetPaymentTypeFilter(purchase.PaymentMethodNumber));
 
             ValidateOperation(client, purchase.Value);
 
@@ -43,7 +43,21 @@ namespace NixService.Services.Base
             return new StatusCodeResult((int)HttpStatusCode.OK);
         }
 
-        public abstract StatementDTO<TEntityDto> GetStatement(int paymentMethodNumber, DateTime startDate, DateTime endDate);
+        public StatementDto<TEntityDto> GetStatement(int paymentMethodNumber, DateTime startDate, DateTime endDate)
+        {
+            var client = clientRepository.GetClient(GetPaymentTypeFilter(paymentMethodNumber));
+
+            var initialValue = accountRepository.GetStatements().Where(x => x.ClientId == client.Id && x.PurchaseDate < startDate).Select(x => x.PurchaseValue).Sum();
+            var FinalValue = accountRepository.GetStatements().Where(x => x.ClientId == client.Id && x.PurchaseDate < endDate).Select(x => x.PurchaseValue).Sum();
+            var statements = accountRepository.GetStatements().Where((x => x.ClientId == client.Id && x.PurchaseDate >= startDate && x.PurchaseDate >= endDate));
+
+            return new StatementDto<TEntityDto>
+            {
+                InitialValue = initialValue,
+                FinalValue = FinalValue,
+                Statements = ConvertToDtoIEnumerable(statements)
+            };
+        }
 
         protected abstract Expression<Func<TEntity, bool>> GetPaymentTypeFilter(int serviceNumber);
 

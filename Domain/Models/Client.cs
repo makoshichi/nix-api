@@ -11,6 +11,12 @@ namespace Domain.Models
         public string ClientName { get; set; }
         
         [Required]
+        public int AccountNumber { get; set; }
+
+        [Required]
+        public long CreditCardNumber { get; set; }
+        
+        [Required]
         public decimal CreditCardLimit{ get; set;}
         
         [Required]

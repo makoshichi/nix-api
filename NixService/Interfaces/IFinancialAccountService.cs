@@ -13,6 +13,6 @@ namespace NixService
     {
         Task<StatusCodeResult> Purchase(PurchaseDto purchase);
 
-        StatementDTO<TEntityDto> GetStatement(int paymentMethodNumber, DateTime startDate, DateTime endDate);
+        StatementDto<TEntityDto> GetStatement(int paymentMethodNumber, DateTime startDate, DateTime endDate);
     }
 }

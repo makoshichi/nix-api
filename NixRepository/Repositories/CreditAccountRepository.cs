@@ -12,10 +12,5 @@ namespace NixRepository.Repositories
         public CreditAccountRepository(NixContext context) : base(context)
         {
         }
-
-        public override IEnumerable<TEntity> GetStatement(int paymentMethodNumber, DateTime startDate, DateTime endDate)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
