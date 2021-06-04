@@ -43,7 +43,7 @@ namespace NixService.Services.Base
             return new StatusCodeResult((int)HttpStatusCode.OK);
         }
 
-        public async Task<StatementDto<TEntityDto>> GetStatement(StatementFilterDto filter)
+        public async Task<StatementsDto<TEntityDto>> GetStatement(StatementFilterDto filter)
         {
             var client = await clientRepository.GetClient(GetPaymentFilter(filter.PaymentMethodNumber));
 
@@ -53,7 +53,7 @@ namespace NixService.Services.Base
 
             var tuple = ComputeStatementFunds(client, initialValue, finalValue);
 
-            return new StatementDto<TEntityDto>
+            return new StatementsDto<TEntityDto>
             {
                 InitialValue = tuple.Initial,
                 FinalValue = tuple.Final,

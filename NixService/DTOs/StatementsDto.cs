@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace NixService.DTOs
 {
-    public class StatementDto<TEntityDto> where TEntityDto : BaseAccountDto
+    public class StatementsDto<TEntityDto> where TEntityDto : BaseAccountDto
     {
         public IEnumerable<TEntityDto> Statements { get; set; }
         public decimal InitialValue { get; set; }
