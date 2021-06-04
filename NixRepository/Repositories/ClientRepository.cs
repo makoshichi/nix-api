@@ -36,7 +36,7 @@ namespace NixRepository.Repositories
                     }).FirstOrDefaultAsync();
 
             if (client == null)
-                throw new HttpResponseException(System.Net.HttpStatusCode.NotFound, "Método de pagamento não encontrado");
+                throw new HttpResponseException(System.Net.HttpStatusCode.NotFound, "Método de pagamento não encontrado para o cliente");
 
             return client;
         }
