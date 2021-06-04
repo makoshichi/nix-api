@@ -1,15 +1,12 @@
-﻿namespace NixService.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace NixService.DTOs
 {
     /// <summary>
     /// DTO utilizado pelo endpoint de abertura de conta
     /// </summary>
     public class ClientDto
     {
-        /// <summary>
-        /// Id do Cliente
-        /// </summary>
-        public int Id { get; set; }
-
         /// <summary>
         /// Nome do Cliente (obrigatório)
         /// </summary>

@@ -27,7 +27,7 @@ namespace NixWeb.Controllers
         /// <summary>
         /// Método para abertura de conta
         /// </summary>
-        /// <param name="client">Parametros do cliente</param>
+        /// <param name="client">Encapsula os parametros do cliente: nome, limite de crédito, fundos iniciais, número da conta e número do cartão. Todos os campos são gerados automaticamente se deixados em branco, exceto ClientName, que é obrigatório</param>
         /// <returns>Mensagem de sucesso</returns>
         [HttpPost("OpenAccount")]
         public async Task<IActionResult> OpenAccount([FromBody] ClientDto client)

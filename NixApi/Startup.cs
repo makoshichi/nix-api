@@ -11,6 +11,8 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System;
 using System.IO;
+using NixService.Validators;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace NixWeb
 {
@@ -32,7 +34,14 @@ namespace NixWeb
 
             DependencyInjection.AddScoped(services);
 
-            services.AddControllers(options => 
+            //services.AddControllers(options => 
+            //    options.Filters.Add(new HttpResponseExceptionFilter())).AddFluentValidation(
+            //        o =>
+            //        {
+            //            o.RegisterValidatorsFromAssemblyContaining<ClientDtoValidator>();
+            //        });
+
+            services.AddControllers(options =>
                 options.Filters.Add(new HttpResponseExceptionFilter())).AddFluentValidation();
 
             ValidatorsDependencyInjection.AddTransient(services);
@@ -43,6 +52,7 @@ namespace NixWeb
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 options.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
+                //options.AddFluentValidationRules
             });
         }
 
@@ -67,7 +77,10 @@ namespace NixWeb
                 endpoints.MapControllers();
             });
 
-            app.UseSwagger();
+            app.UseSwagger(c =>
+            {
+                c.SerializeAsV2 = true;
+            });
 
             app.UseSwaggerUI(c =>
             {
