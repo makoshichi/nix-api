@@ -1,7 +1,7 @@
 ﻿using Domain.Models;
 using Domain.Models.Base;
 using Microsoft.EntityFrameworkCore;
-using NiRepository.Context;
+using Domain.Context;
 using NixUtil.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -24,7 +24,7 @@ namespace NixRepository.Repositories
         public async Task<Client> GetClient<TEntity>(Expression<Func<TEntity, bool>> chargeMethodExpression) where TEntity : BaseAccount
         {
             var client = await _context.Set<TEntity>().Where(chargeMethodExpression).Join(
-                    _context.ClientAccounts,
+                    _context.Clients,
                     d => d.ClientId,
                     c => c.Id,
                     (d, c) => new Client
@@ -44,12 +44,12 @@ namespace NixRepository.Repositories
 
         public async Task<Client> GetClient(int clientId)
         {
-            return await _context.ClientAccounts.Where(x => x.Id == clientId).Select(x => x).FirstOrDefaultAsync();
+            return await _context.Clients.Where(x => x.Id == clientId).Select(x => x).FirstOrDefaultAsync();
         }
 
         public IEnumerable<Client> GetClients()
         {
-            return _context.ClientAccounts;
+            return _context.Clients;
 
         }
     }

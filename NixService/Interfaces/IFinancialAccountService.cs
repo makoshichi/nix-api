@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NixService
 {
-    public interface IStatementService<TEntity, TEntityDto> 
+    public interface IFinancialAccountService<TEntity, TEntityDto> 
         where TEntity : BaseAccount
         where TEntityDto : BaseAccountDto
     {

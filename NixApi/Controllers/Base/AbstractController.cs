@@ -14,9 +14,9 @@ namespace NixWeb.Controllers.Base
         where TEntityDto : BaseAccountDto
     {
 
-        protected IStatementService<TEntity, TEntityDto> service;
+        protected IFinancialAccountService<TEntity, TEntityDto> service;
 
-        public AbstractController(IStatementService<TEntity, TEntityDto> service) : base()
+        public AbstractController(IFinancialAccountService<TEntity, TEntityDto> service) : base()
         {
             this.service = service;
         }

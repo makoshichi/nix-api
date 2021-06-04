@@ -10,11 +10,11 @@ using System.Net;
 
 namespace NixService.Services
 {
-    public class CreditService<TEntity, TEntityDto> : AbstractStatementService<TEntity, TEntityDto>
+    public class CreditService<TEntity, TEntityDto> : FinantialAccountService<TEntity, TEntityDto>
         where TEntity : CreditAccount, new()
         where TEntityDto : CreditAccountDto
     {
-        public CreditService(IStatementRepository<TEntity> statementRepository, IClientAccountRepository clientAccountRepository, IMapper mapper) 
+        public CreditService(IFinancialAccountRepository<TEntity> statementRepository, IClientAccountRepository clientAccountRepository, IMapper mapper) 
             : base(statementRepository, clientAccountRepository, mapper)
         {
         }

@@ -14,19 +14,19 @@ using System.Threading.Tasks;
 
 namespace NixService.Services.Base
 {
-    public abstract class AbstractStatementService<TEntity, TEntityDto> : IStatementService<TEntity, TEntityDto>
+    public abstract class FinantialAccountService<TEntity, TEntityDto> : IFinancialAccountService<TEntity, TEntityDto>
         where TEntity : BaseAccount
         where TEntityDto : BaseAccountDto
     {
-        protected IStatementRepository<TEntity> statementRepository;
+        protected IFinancialAccountRepository<TEntity> accountRepository;
         protected IClientAccountRepository clientAccountRepository;
 
         readonly IMapper _mapper;
 
-        public AbstractStatementService(IStatementRepository<TEntity> statementRepository, IClientAccountRepository clientAccountRepository, IMapper mapper)
+        public FinantialAccountService(IFinancialAccountRepository<TEntity> accountRepository, IClientAccountRepository clientAccountRepository, IMapper mapper)
         {
             this.clientAccountRepository = clientAccountRepository;
-            this.statementRepository = statementRepository;
+            this.accountRepository = accountRepository;
             _mapper = mapper;
         }
 
@@ -38,7 +38,7 @@ namespace NixService.Services.Base
 
             var entry = CreateEntry(client, purchase);
 
-            await statementRepository.SaveAsync(entry);
+            await accountRepository.SaveAsync(entry);
 
             return new StatusCodeResult((int)HttpStatusCode.OK);
         }

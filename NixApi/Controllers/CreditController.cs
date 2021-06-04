@@ -12,7 +12,7 @@ namespace NixWeb.Controllers
     [ApiController]
     public class CreditController : AbstractController<CreditAccount, CreditAccountDto>
     {
-        public CreditController(IStatementService<CreditAccount, CreditAccountDto> service) : base(service)
+        public CreditController(IFinancialAccountService<CreditAccount, CreditAccountDto> service) : base(service)
         {
         }
 

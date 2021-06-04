@@ -1,18 +1,18 @@
 ﻿using Domain.Models.Base;
-using NiRepository.Context;
+using Domain.Context;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace NixRepository.Repositories
 {
-    public abstract class AbstractStatementRepository<TEntity> : IStatementRepository<TEntity>
+    public abstract class FinantialAccountRepository<TEntity> : IFinancialAccountRepository<TEntity>
         where TEntity : BaseAccount
     {
 
         protected NixContext context;
 
-        public AbstractStatementRepository(NixContext context)
+        public FinantialAccountRepository(NixContext context)
         {
             this.context = context;
         }

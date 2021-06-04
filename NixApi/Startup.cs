@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using NiRepository.Context;
+using Domain.Context;
 using NixWeb.Config;
 
 namespace NixWeb

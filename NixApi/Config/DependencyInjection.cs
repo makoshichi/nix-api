@@ -12,8 +12,8 @@ namespace NixWeb.Config
     {
         public static void AddScoped(IServiceCollection services)
         {
-            services.AddScoped<IStatementService<BaseAccount, BaseAccountDto>, AbstractStatementService<BaseAccount, BaseAccountDto>>();
-            services.AddScoped<IStatementRepository<BaseAccount>, AbstractStatementRepository<BaseAccount>>();
+            services.AddScoped<IFinancialAccountService<BaseAccount, BaseAccountDto>, FinantialAccountService<BaseAccount, BaseAccountDto>>();
+            services.AddScoped<IFinancialAccountRepository<BaseAccount>, FinantialAccountRepository<BaseAccount>>();
             services.AddScoped<IClientAccountRepository, ClientAccountRepository>();
         }
     }

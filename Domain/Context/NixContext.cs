@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Domain.Models;
 
-namespace NiRepository.Context
+namespace Domain.Context
 {
     public class NixContext : DbContext
     {
@@ -9,8 +9,8 @@ namespace NiRepository.Context
         {
         }
 
-        public DbSet<Client> ClientAccounts;
-        public DbSet<DebtAccount> DebtStatements;
-        public DbSet<CreditAccount> CreditAccount;
+        public DbSet<Client> Clients { get; set; }
+        public DbSet<DebtAccount> DebtAccounts { get; set; }
+        public DbSet<CreditAccount> CreditAccounts { get; set; }
     }
 }

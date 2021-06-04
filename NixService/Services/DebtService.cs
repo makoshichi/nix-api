@@ -11,12 +11,12 @@ using System.Net;
 
 namespace NixService.Services
 {
-    public class DebtService<TEntity, TEntityDto> : AbstractStatementService<TEntity, TEntityDto>
+    public class DebtService<TEntity, TEntityDto> : FinantialAccountService<TEntity, TEntityDto>
         where TEntity : DebtAccount, new()
         where TEntityDto : DebtAccountDto
     {
 
-        public DebtService(IStatementRepository<TEntity> statementRepository, IClientAccountRepository clientAccountRepository, IMapper mapper)
+        public DebtService(IFinancialAccountRepository<TEntity> statementRepository, IClientAccountRepository clientAccountRepository, IMapper mapper)
             : base(statementRepository, clientAccountRepository, mapper)
         {
         }
@@ -46,9 +46,9 @@ namespace NixService.Services
 
         public override StatementDTO<TEntityDto> GetStatement(int paymentMethodNumber, DateTime startDate, DateTime endDate)
         {
-            var startFunds = statementRepository.GetStatements().Where(x => x.AccountNumber == paymentMethodNumber && x.PurchaseDate < startDate).Select(x => x.PurchaseValue).Sum();
-            var finalFunds = statementRepository.GetStatements().Where(x => x.AccountNumber == paymentMethodNumber && x.PurchaseDate < endDate).Select(x => x.PurchaseValue).Sum();
-            var statements = statementRepository.GetStatements().Where((x => x.AccountNumber == paymentMethodNumber && x.PurchaseDate >= startDate && x.PurchaseDate >= endDate));
+            var startFunds = accountRepository.GetStatements().Where(x => x.AccountNumber == paymentMethodNumber && x.PurchaseDate < startDate).Select(x => x.PurchaseValue).Sum();
+            var finalFunds = accountRepository.GetStatements().Where(x => x.AccountNumber == paymentMethodNumber && x.PurchaseDate < endDate).Select(x => x.PurchaseValue).Sum();
+            var statements = accountRepository.GetStatements().Where((x => x.AccountNumber == paymentMethodNumber && x.PurchaseDate >= startDate && x.PurchaseDate >= endDate));
 
             return new StatementDTO<TEntityDto>
             {
