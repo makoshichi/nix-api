@@ -6,17 +6,29 @@ using Newtonsoft.Json;
 
 namespace NixWeb.Controllers
 {
+    /// <summary>
+    /// Controller para abertura de contas e listagem das mesmas
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class ClientController : ControllerBase
     {
         readonly IClientService _service;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="service"></param>
         public ClientController(IClientService service) : base()
         {
             _service = service;
         }
 
+        /// <summary>
+        /// Método para abertura de conta
+        /// </summary>
+        /// <param name="client">Parametros do cliente</param>
+        /// <returns>Resposta de sucesso</returns>
         [HttpPost("OpenAccount")]
         public async Task<IActionResult> OpenAccount([FromBody] ClientDto client)
         {
@@ -25,6 +37,10 @@ namespace NixWeb.Controllers
             return Ok(response); // As exceções são gerenciadas pelo HttpResponseExceptionFilter
         }
 
+        /// <summary>
+        /// Método para listagem das contas/clientes
+        /// </summary>
+        /// <returns>Listagem das contas/clientes</returns>
         [HttpGet("GetClients")]
         public IActionResult GetClients()
         {

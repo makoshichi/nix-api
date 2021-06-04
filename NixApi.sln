@@ -5,13 +5,18 @@ VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NixWeb", "NixApi\NixWeb.csproj", "{184AE8B5-5302-4ECD-8B82-E3C892500F9B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NixService", "NixService\NixService.csproj", "{F1364480-5F76-49B1-A5A8-BE3757F2A2EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NixService", "NixService\NixService.csproj", "{F1364480-5F76-49B1-A5A8-BE3757F2A2EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NixRepository", "NixRepository\NixRepository.csproj", "{36DE260A-D9AB-4FD2-80C1-0436492A0976}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NixRepository", "NixRepository\NixRepository.csproj", "{36DE260A-D9AB-4FD2-80C1-0436492A0976}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{5931ED70-D21E-4658-BE02-4747DD384A57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{5931ED70-D21E-4658-BE02-4747DD384A57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NixUtil", "NixUtil\NixUtil.csproj", "{F47E0C87-5D80-42C0-A2BD-C953BD44B27E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NixUtil", "NixUtil\NixUtil.csproj", "{F47E0C87-5D80-42C0-A2BD-C953BD44B27E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A8A0D365-9E71-4949-B580-A9CA4D3C1951}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

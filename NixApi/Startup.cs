@@ -7,6 +7,10 @@ using Microsoft.EntityFrameworkCore;
 using Domain.Context;
 using NixWeb.Config;
 using FluentValidation.AspNetCore;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
+using System;
+using System.IO;
 
 namespace NixWeb
 {
@@ -32,6 +36,14 @@ namespace NixWeb
                 options.Filters.Add(new HttpResponseExceptionFilter())).AddFluentValidation();
 
             ValidatorsDependencyInjection.AddTransient(services);
+
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "NixAPI", Version = "v1" });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                options.IncludeXmlComments(xmlPath);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +56,8 @@ namespace NixWeb
 
             app.UseHttpsRedirection();
 
+            app.UseStaticFiles();
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -51,6 +65,14 @@ namespace NixWeb
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.RoutePrefix = "";
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "NixAPI V1");
             });
         }
     }
