@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using NixService.DTOs;
 using Domain.Models;
 using NixService;
+using System;
 
 namespace NixWeb.Controllers
 {
@@ -22,9 +23,9 @@ namespace NixWeb.Controllers
         }
 
         [HttpGet("{id}")]
-        public override IActionResult GetStatement(int accountNumber)
+        public override IActionResult GetStatement(int accountNumber, DateTime startDate, DateTime endDate)
         {
-            return base.GetStatement(accountNumber);
+            return base.GetStatement(accountNumber, startDate, endDate);
         }
     }
 }
