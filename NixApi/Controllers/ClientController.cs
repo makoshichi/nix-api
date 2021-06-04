@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NixWeb.Controllers.Base;
 using System.Threading.Tasks;
 using NixService.DTOs;
-using Domain.Models;
 using NixService;
-using System;
 using Newtonsoft.Json;
 
 namespace NixWeb.Controllers
