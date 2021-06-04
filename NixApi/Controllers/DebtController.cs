@@ -25,7 +25,7 @@ namespace NixWeb.Controllers
         /// <summary>
         /// Executa uma compra no débito
         /// </summary>
-        /// <param name="purchase">Encapsula número do método de pagamento, valor da compra e descrição</param>
+        /// <param name="purchase">Encapsula número do método de pagamento, valor da compra e descrição. Todos os campos são obrigatórios.</param>
         /// <returns>Mensagem de Sucesso</returns>
         [HttpPost("Purchase")]
         public override async Task<IActionResult> Purchase([FromBody] PurchaseDto purchase)
@@ -36,7 +36,7 @@ namespace NixWeb.Controllers
         /// <summary>
         /// Recupera extrato de débito de acordo com o filtro de data
         /// </summary>
-        /// <param name="filter">Encapsula de número do metodo de pagamento e datas inicial e final</param>
+        /// <param name="filter">Encapsula de número do metodo de pagamento e datas inicial e final. Todos os campos são obrigatórios.</param>
         /// <returns>Extrato do período informado</returns>
         [HttpPost("GetStatement")]
         public override async Task<IActionResult> GetStatement([FromBody] StatementFilterDto filter)
