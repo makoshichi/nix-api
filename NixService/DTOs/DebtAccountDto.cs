@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NixService.DTOs
 {
-    public class DebtAccountDto : BaseAccountDto
+    public class DebtAccountDto : BaseFinancialAccountDto
     {
         public long AccountNumber { get; set; }
     }

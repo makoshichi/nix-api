@@ -15,8 +15,8 @@ using System.Threading.Tasks;
 namespace NixService.Services.Base
 {
     public abstract class FinancialAccountService<TEntity, TEntityDto>
-        where TEntity : BaseAccount
-        where TEntityDto : BaseAccountDto
+        where TEntity : BaseFinancialAccount
+        where TEntityDto : BaseFinancialAccountDto
     {
         protected IFinancialAccountRepository<TEntity> accountRepository;
         protected IClientRepository clientRepository;
@@ -61,9 +61,9 @@ namespace NixService.Services.Base
             };
         }
 
-        protected abstract Expression<Func<Client, bool>> GetPaymentFilter(long paymentMethodNumber);
+        protected abstract Expression<Func<Client, bool>> GetPaymentFilter(long? paymentMethodNumber);
 
-        protected abstract void ValidateOperation(Client client, decimal purchaseValue);
+        protected abstract void ValidateOperation(Client client, decimal? purchaseValue);
 
         protected abstract TEntity CreateEntry(Client client, PurchaseDto purchase);
 

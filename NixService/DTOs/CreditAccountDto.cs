@@ -2,7 +2,7 @@
 
 namespace NixService.DTOs
 {
-    public class CreditAccountDto : BaseAccountDto
+    public class CreditAccountDto : BaseFinancialAccountDto
     {
         public long CreditCardNumber { get; set; }
     }

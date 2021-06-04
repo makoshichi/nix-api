@@ -19,12 +19,12 @@ namespace NixService.Services
             : base(accountRepository, clientAccountRepository, mapper)
         {
         }
-        protected override Expression<Func<Client, bool>> GetPaymentFilter(long paymentMethodNumber)
+        protected override Expression<Func<Client, bool>> GetPaymentFilter(long? paymentMethodNumber)
         {
             return (x => x.CreditCardNumber == paymentMethodNumber);
         }
 
-        protected override void ValidateOperation(Client client, decimal purchaseValue)
+        protected override void ValidateOperation(Client client, decimal? purchaseValue)
         {
 
             // Para fins deste desafio, estipula-se o calculo apenas sobre o limite do cartão, ignorando fechamento e emissão de faturas mensais
@@ -41,7 +41,7 @@ namespace NixService.Services
                 ClientId = client.Id,
                 //CreditCardNumber = purchase.PaymentMethodNumber,
                 Description = purchase.Description,
-                PurchaseValue = purchase.Value,
+                PurchaseValue = purchase.Value.Value,
                 PurchaseDate = DateTime.Now
             };
         }

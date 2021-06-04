@@ -21,12 +21,12 @@ namespace NixService.Services
         {
         }
 
-        protected override Expression<Func<Client, bool>> GetPaymentFilter(long paymentMethodNumber)
+        protected override Expression<Func<Client, bool>> GetPaymentFilter(long? paymentMethodNumber)
         {
             return (x => x.AccountNumber == paymentMethodNumber);
         }
 
-        protected override void ValidateOperation(Client client, decimal purchaseValue)
+        protected override void ValidateOperation(Client client, decimal? purchaseValue)
         {
             var spent = accountRepository.GetStatements().Where(x => x.ClientId == client.Id).Select(x => x.PurchaseValue).Sum();
 
@@ -41,7 +41,7 @@ namespace NixService.Services
                 ClientId = client.Id,
                 //AccountNumber = purchase.PaymentMethodNumber,
                 Description = purchase.Description,
-                PurchaseValue = purchase.Value,
+                PurchaseValue = purchase.Value.Value,
                 PurchaseDate = DateTime.Now
             };
         }

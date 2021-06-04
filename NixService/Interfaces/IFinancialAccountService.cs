@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 namespace NixService
 {
     public interface IFinancialAccountService<TEntity, TEntityDto> 
-        where TEntity : BaseAccount
-        where TEntityDto : BaseAccountDto
+        where TEntity : BaseFinancialAccount
+        where TEntityDto : BaseFinancialAccountDto
     {
         Task<StatusCodeResult> Purchase(PurchaseDto purchase);
 

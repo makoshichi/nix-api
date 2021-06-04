@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Models
 {
     [Table("DebtStatement")]
-    public class DebtAccount : BaseAccount
+    public class DebtAccount : BaseFinancialAccount
     {
 
     }

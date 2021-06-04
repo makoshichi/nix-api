@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NixRepository
 {
-    public interface IFinancialAccountRepository<TEntity> where TEntity : BaseAccount
+    public interface IFinancialAccountRepository<TEntity> where TEntity : BaseFinancialAccount
     {
         Task SaveAsync(TEntity entity);
 

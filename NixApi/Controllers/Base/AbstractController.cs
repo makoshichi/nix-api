@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 namespace NixWeb.Controllers.Base
 {
     public abstract class AbstractController<TEntity, TEntityDto> : ControllerBase 
-        where TEntity : BaseAccount
-        where TEntityDto : BaseAccountDto
+        where TEntity : BaseFinancialAccount
+        where TEntityDto : BaseFinancialAccountDto
     {
 
         protected IFinancialAccountService<TEntity, TEntityDto> service;

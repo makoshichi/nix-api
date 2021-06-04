@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace NixRepository.Repositories
 {
     public abstract class FinantialAccountRepository<TEntity>
-        where TEntity : BaseAccount
+        where TEntity : BaseFinancialAccount
     {
 
         protected NixContext context;

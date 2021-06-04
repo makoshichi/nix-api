@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Models.Base
 {
-    public abstract class BaseAccount
+    public abstract class BaseFinancialAccount
     {       
         [Key]
         public int Id { get; set; }

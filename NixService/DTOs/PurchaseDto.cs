@@ -10,12 +10,12 @@ namespace NixService.DTOs
         /// <summary>
         /// Número do método de pagamento
         /// </summary>
-        public long PaymentMethodNumber { get; set; }
+        public long? PaymentMethodNumber { get; set; }
 
         /// <summary>
         /// Valor da compra
         /// </summary>
-        public decimal Value { get; set; }
+        public decimal? Value { get; set; }
 
         /// <summary>
         /// Descrição
