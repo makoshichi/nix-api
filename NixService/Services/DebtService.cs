@@ -1,28 +1,27 @@
-﻿using Domain.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Domain.Models;
 using NixRepository;
 using NixService.DTOs;
 using NixService.Services.Base;
 using NixUtil.Exceptions;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NixService.Services
 {
     public class DebtService<TEntity, TEntityDto> : AbstractStatementService<TEntity, TEntityDto>
         where TEntity : DebtAccount, new()
-        where TEntityDto : DebtStatementDto
+        where TEntityDto : DebtAccountDto
     {
-        public DebtService(IStatementRepository<TEntity> statementRepository, IClientAccountRepository clientAccountRepository)
-            : base(statementRepository, clientAccountRepository)
+
+        public DebtService(IStatementRepository<TEntity> statementRepository, IClientAccountRepository clientAccountRepository, IMapper mapper)
+            : base(statementRepository, clientAccountRepository, mapper)
         {
         }
 
-        protected override Expression<Func<TEntity, bool>> GetFundsFilter(int accountNumber)
+        protected override Expression<Func<TEntity, bool>> GetPaymentTypeFilter(int accountNumber)
         {
             return (x => x.AccountNumber == accountNumber);
         }
@@ -38,12 +37,25 @@ namespace NixService.Services
             return new TEntity
             {
                 ClientId = client.Id,
-                AccountNumber = purchase.ChargeMethodNumber,
+                AccountNumber = purchase.PaymentMethodNumber,
                 Description = purchase.Description,
                 PurchaseValue = purchase.Value,
                 PurchaseDate = DateTime.Now
             };
         }
 
+        public override StatementDTO<TEntityDto> GetStatement(int paymentMethodNumber, DateTime startDate, DateTime endDate)
+        {
+            var startFunds = statementRepository.GetStatements().Where(x => x.AccountNumber == paymentMethodNumber && x.PurchaseDate < startDate).Select(x => x.PurchaseValue).Sum();
+            var finalFunds = statementRepository.GetStatements().Where(x => x.AccountNumber == paymentMethodNumber && x.PurchaseDate < endDate).Select(x => x.PurchaseValue).Sum();
+            var statements = statementRepository.GetStatements().Where((x => x.AccountNumber == paymentMethodNumber && x.PurchaseDate >= startDate && x.PurchaseDate >= endDate));
+
+            return new StatementDTO<TEntityDto>
+            {
+                StartFunds = startFunds,
+                FinalFunds = finalFunds,
+                Statements = ConvertToDtoIEnumerable(statements)
+            };
+        }
     }
 }

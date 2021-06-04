@@ -47,9 +47,9 @@ namespace NixRepository.Repositories
             return await _context.ClientAccounts.Where(x => x.Id == clientId).Select(x => x).FirstOrDefaultAsync();
         }
 
-        public List<Client> GetClients()
+        public IEnumerable<Client> GetClients()
         {
-            return _context.ClientAccounts.ToList();
+            return _context.ClientAccounts;
 
         }
     }

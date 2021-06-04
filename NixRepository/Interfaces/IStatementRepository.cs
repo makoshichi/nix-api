@@ -8,7 +8,10 @@ namespace NixRepository
 {
     public interface IStatementRepository<TEntity> where TEntity : BaseAccount
     {
-        Task Save(TEntity entity);
-        List<TEntity> GetStatement(int clientId, DateTime startDate, DateTime endDate);
+        Task SaveAsync(TEntity entity);
+
+        IEnumerable<TEntity> GetStatement(int clientId, DateTime startDate, DateTime endDate);
+
+        IEnumerable<TEntity> GetStatements();
     }
 }

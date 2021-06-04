@@ -1,4 +1,5 @@
-﻿using Domain.Models;
+﻿using AutoMapper;
+using Domain.Models;
 using NixRepository;
 using NixService.DTOs;
 using NixService.Services.Base;
@@ -11,20 +12,25 @@ namespace NixService.Services
 {
     public class CreditService<TEntity, TEntityDto> : AbstractStatementService<TEntity, TEntityDto>
         where TEntity : CreditAccount, new()
-        where TEntityDto : CreditStatementDto
+        where TEntityDto : CreditAccountDto
     {
-        public CreditService(IStatementRepository<TEntity> statementRepository, IClientAccountRepository clientAccountRepository) 
-            : base(statementRepository, clientAccountRepository)
+        public CreditService(IStatementRepository<TEntity> statementRepository, IClientAccountRepository clientAccountRepository, IMapper mapper) 
+            : base(statementRepository, clientAccountRepository, mapper)
         {
         }
 
-        protected override Expression<Func<TEntity, bool>> GetFundsFilter(int creditCardNumber)
+        protected override Expression<Func<TEntity, bool>> GetPaymentTypeFilter(int creditCardNumber)
         {
             return (x => x.CreditCardNumber == creditCardNumber);
         }
 
         protected override void ValidateOperation(Client client, decimal purchaseValue)
         {
+
+            // Para fins deste desafio, estipula-se que O vencimento do cartão é no dia primeiro de cada mês
+
+            //var currentDebt = statementRepository.Ge
+
             if (client.Funds - purchaseValue < 0)
                 throw new HttpResponseException(HttpStatusCode.Unauthorized, "Transação não autorizada");
         }
@@ -34,12 +40,16 @@ namespace NixService.Services
             return new TEntity
             {
                 ClientId = client.Id,
-                CreditCardNumber = purchase.ChargeMethodNumber,
+                CreditCardNumber = purchase.PaymentMethodNumber,
                 Description = purchase.Description,
                 PurchaseValue = purchase.Value,
                 PurchaseDate = DateTime.Now
             };
         }
 
+        public override StatementDTO<TEntityDto> GetStatement(int paymentMethodNumber, DateTime startDate, DateTime endDate)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

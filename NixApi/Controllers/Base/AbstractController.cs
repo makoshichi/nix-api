@@ -1,15 +1,17 @@
 ﻿using Domain.Models.Base;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using NixService;
 using NixService.DTOs;
 using NixService.DTOs.Base;
+using System;
 using System.Threading.Tasks;
 
 namespace NixWeb.Controllers.Base
 {
     public abstract class AbstractController<TEntity, TEntityDto> : ControllerBase 
         where TEntity : BaseAccount
-        where TEntityDto : BaseStatementDto
+        where TEntityDto : BaseAccountDto
     {
 
         protected IStatementService<TEntity, TEntityDto> service;
@@ -24,18 +26,17 @@ namespace NixWeb.Controllers.Base
             await service.Purchase(new PurchaseDto
             {
                 Value = value,
-                ChargeMethodNumber = chargeMethodNumber,
+                PaymentMethodNumber = chargeMethodNumber,
                 Description = description
             });
 
             return Ok("Transação efetuada com sucesso"); // As exceções são gerenciadas pelo HttpResponseExceptionFilter
         }      
 
-        public virtual IActionResult GetStatement(int accountNumber)
+        public virtual IActionResult GetStatement(int paymentMethodNumber, DateTime startDate, DateTime endDate)
         {
-            //var result = JsonConvert.SerializeObject(_context.Set<TEntity>().Where(x => x.AccountNumber == accountNumber).Select(x => x));
-            //return Ok(result);
-            return Ok();
+            var response = JsonConvert.SerializeObject(service.GetStatement(paymentMethodNumber, startDate, endDate)); 
+            return Ok(response);
         }
     }
 }

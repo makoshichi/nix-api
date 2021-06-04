@@ -6,6 +6,6 @@ namespace Domain.Models
     public class CreditAccount : BaseAccount
     {
         [Required]
-        public int CreditCardNumber { get; set; }
+        public int CreditCardNumber { get; set; } 
     }
 }

@@ -12,7 +12,7 @@ namespace NixWeb.Config
     {
         public static void AddScoped(IServiceCollection services)
         {
-            services.AddScoped<IStatementService<BaseAccount, BaseStatementDto>, AbstractStatementService<BaseAccount, BaseStatementDto>>();
+            services.AddScoped<IStatementService<BaseAccount, BaseAccountDto>, AbstractStatementService<BaseAccount, BaseAccountDto>>();
             services.AddScoped<IStatementRepository<BaseAccount>, AbstractStatementRepository<BaseAccount>>();
             services.AddScoped<IClientAccountRepository, ClientAccountRepository>();
         }

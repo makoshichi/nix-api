@@ -2,16 +2,17 @@
 using Microsoft.AspNetCore.Mvc;
 using NixService.DTOs;
 using NixService.DTOs.Base;
+using System;
 using System.Threading.Tasks;
 
 namespace NixService
 {
     public interface IStatementService<TEntity, TEntityDto> 
         where TEntity : BaseAccount
-        where TEntityDto : BaseStatementDto
+        where TEntityDto : BaseAccountDto
     {
         Task<StatusCodeResult> Purchase(PurchaseDto purchase);
 
-        IActionResult GetStatement(int chargeMethodNumber);
+        StatementDTO<TEntityDto> GetStatement(int paymentMethodNumber, DateTime startDate, DateTime endDate);
     }
 }

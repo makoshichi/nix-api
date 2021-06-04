@@ -3,7 +3,6 @@ using Domain.Models.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NixRepository
@@ -15,6 +14,6 @@ namespace NixRepository
 
         Task<Client> GetClient(int clientId);
 
-        List<Client> GetClients();
+        IEnumerable<Client> GetClients();
     }
 }

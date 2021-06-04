@@ -3,15 +3,16 @@ using Microsoft.AspNetCore.Mvc;
 using NixService;
 using NixService.DTOs;
 using NixWeb.Controllers.Base;
+using System;
 using System.Threading.Tasks;
 
 namespace NixWeb.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DebtController : AbstractController<DebtAccount, DebtStatementDto>
+    public class DebtController : AbstractController<DebtAccount, DebtAccountDto>
     {
-        public DebtController(IStatementService<DebtAccount, DebtStatementDto> service) : base(service)
+        public DebtController(IStatementService<DebtAccount, DebtAccountDto> service) : base(service)
         {
         }
 
@@ -22,9 +23,9 @@ namespace NixWeb.Controllers
         }
 
         [HttpGet("{id}")]
-        public override IActionResult GetStatement(int accountNumber)
+        public override IActionResult GetStatement(int accountNumber, DateTime startDate, DateTime endDate)
         {
-            return base.GetStatement(accountNumber);
+            return base.GetStatement(accountNumber, startDate, endDate);
         }
     }
 }

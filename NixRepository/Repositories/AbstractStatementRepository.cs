@@ -1,11 +1,7 @@
 ﻿using Domain.Models.Base;
-using Microsoft.EntityFrameworkCore;
 using NiRepository.Context;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NixRepository.Repositories
@@ -21,21 +17,14 @@ namespace NixRepository.Repositories
             this.context = context;
         }
 
+        public abstract IEnumerable<TEntity> GetStatement(int paymentMethodNumber, DateTime startDate, DateTime endDate);
 
-        public List<TEntity> GetStatement(int chargeMethodNumber, DateTime startDate, DateTime endDate)
+        public IEnumerable<TEntity> GetStatements()
         {
-            //return context.Set<TEntity>().Where(
-            //    x => x.ClientId == clientId
-            //    && x.PurchaseDate >= startDate
-            //    && x.PurchaseDate <= endDate
-            //    )
-            //    .Select(x => x).ToList();
-            return null;
+            return context.Set<TEntity>();
         }
 
-
-
-        public async Task Save(TEntity entity)
+        public async Task SaveAsync(TEntity entity)
         {
             context.Add(entity);
             await context.SaveChangesAsync();

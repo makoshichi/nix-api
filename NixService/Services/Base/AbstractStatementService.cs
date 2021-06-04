@@ -1,10 +1,13 @@
-﻿using Domain.Models;
+﻿using AutoMapper;
+using Domain.Models;
 using Domain.Models.Base;
 using Microsoft.AspNetCore.Mvc;
 using NixRepository;
 using NixService.DTOs;
 using NixService.DTOs.Base;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Net;
 using System.Threading.Tasks;
@@ -13,39 +16,47 @@ namespace NixService.Services.Base
 {
     public abstract class AbstractStatementService<TEntity, TEntityDto> : IStatementService<TEntity, TEntityDto>
         where TEntity : BaseAccount
-        where TEntityDto : BaseStatementDto
+        where TEntityDto : BaseAccountDto
     {
-        readonly IStatementRepository<TEntity> _statementRepository;
-        readonly IClientAccountRepository _clientAccountRepository;
+        protected IStatementRepository<TEntity> statementRepository;
+        protected IClientAccountRepository clientAccountRepository;
 
-        public AbstractStatementService(IStatementRepository<TEntity> statementRepository, IClientAccountRepository clientAccountRepository)
+        readonly IMapper _mapper;
+
+        public AbstractStatementService(IStatementRepository<TEntity> statementRepository, IClientAccountRepository clientAccountRepository, IMapper mapper)
         {
-            _clientAccountRepository = clientAccountRepository;
-            _statementRepository = statementRepository;
+            this.clientAccountRepository = clientAccountRepository;
+            this.statementRepository = statementRepository;
+            _mapper = mapper;
         }
-
-        protected abstract Expression<Func<TEntity, bool>> GetFundsFilter(int serviceNumber);
-
-        protected abstract void ValidateOperation(Client client, decimal purchaseValue);
-
-        protected abstract TEntity CreateEntry(Client client, PurchaseDto purchase);
 
         public async Task<StatusCodeResult> Purchase(PurchaseDto purchase)
         {
-            var client = await _clientAccountRepository.GetClient(GetFundsFilter(purchase.ChargeMethodNumber));
+            var client = await clientAccountRepository.GetClient(GetPaymentTypeFilter(purchase.PaymentMethodNumber));
 
             ValidateOperation(client, purchase.Value);
 
             var entry = CreateEntry(client, purchase);
 
-            await _statementRepository.Save(entry);
+            await statementRepository.SaveAsync(entry);
 
             return new StatusCodeResult((int)HttpStatusCode.OK);
         }
 
-        public virtual IActionResult GetStatement(int accountNumber)
+        public abstract StatementDTO<TEntityDto> GetStatement(int paymentMethodNumber, DateTime startDate, DateTime endDate);
+
+        protected abstract Expression<Func<TEntity, bool>> GetPaymentTypeFilter(int serviceNumber);
+
+        protected abstract void ValidateOperation(Client client, decimal purchaseValue);
+
+        protected abstract TEntity CreateEntry(Client client, PurchaseDto purchase);
+
+        protected IEnumerable<TEntityDto> ConvertToDtoIEnumerable(IEnumerable<TEntity> collection)
         {
-            throw new NotImplementedException();
+            foreach (var entry in collection)
+            {
+                yield return _mapper.Map<TEntityDto>(entry);
+            }
         }
     }
 }

@@ -9,9 +9,9 @@ namespace NixWeb.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CreditController : AbstractController<CreditAccount, CreditStatementDto>
+    public class CreditController : AbstractController<CreditAccount, CreditAccountDto>
     {
-        public CreditController(IStatementService<CreditAccount, CreditStatementDto> service) : base(service)
+        public CreditController(IStatementService<CreditAccount, CreditAccountDto> service) : base(service)
         {
         }
 
