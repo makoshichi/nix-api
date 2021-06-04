@@ -25,7 +25,7 @@ namespace NixService.Services
             {
                 ClientName = clientDto.ClientName,
                 CreditCardLimit = clientDto.CreditCardLimit ?? 5000,
-                Funds = clientDto.Funds ?? 2000,
+                InitialFunds = clientDto.InitialFunds ?? 2000,
                 AccountNumber = clientDto.AccountNumber ?? Misc.GenerateRandomAccountNumber(),
                 CreditCardNumber = clientDto.CreditCardNumber ?? Misc.GenerateRandomCreditCardNumber()
             };

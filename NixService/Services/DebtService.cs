@@ -30,7 +30,7 @@ namespace NixService.Services
         {
             var spent = accountRepository.GetStatements().Where(x => x.ClientId == client.Id).Select(x => x.PurchaseValue).Sum();
 
-            if (client.Funds - spent - purchaseValue < 0)
+            if (client.InitialFunds - spent - purchaseValue < 0)
                 throw new HttpResponseException(HttpStatusCode.Unauthorized, "Transação não autorizada");
         }
 
@@ -48,7 +48,7 @@ namespace NixService.Services
 
         protected override (decimal Initial, decimal Final) ComputeStatementFunds(Client client, decimal initialValue, decimal finalValue)
         {
-            return (client.Funds - initialValue, client.Funds - finalValue);
+            return (client.InitialFunds - initialValue, client.InitialFunds - finalValue);
         }
     }
 }

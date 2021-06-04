@@ -15,12 +15,13 @@ namespace Domain.Context
         public NixContext(DbContextOptions<NixContext> options) : base(options)
         {
         }
-        //Comment above for migrations
 
+        // Adicionado para "contornar rapidamente" problema que tive para gerar migrations
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             try
             {
+                //Get connection string from somewhere else
                 optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=NixApi;Trusted_Connection=True");
             }
             catch (Exception e)

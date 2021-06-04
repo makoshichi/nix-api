@@ -20,7 +20,7 @@ namespace NixService.DTOs
         /// <summary>
         /// Fundos iniciais da conta de débito. Se não for fornecido, o valor inicial é 2000
         /// </summary>
-        public decimal? Funds { get; set; }
+        public decimal? InitialFunds { get; set; }
 
         /// <summary>
         /// Número da conta. Se não foi fornecido, um será gerado automaticamente

@@ -8,8 +8,13 @@ namespace NixService.DTOs
     /// </summary>
     public class StatementFilterDto
     {
+        ///// <summary>
+        ///// Número da conta
+        ///// </summary>
+        //public int AccountNumber { get; set; }
+
         /// <summary>
-        /// Número do método de pagamento
+        /// Número do cartão de crédito
         /// </summary>
         public long PaymentMethodNumber { get; set; }
 

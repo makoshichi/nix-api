@@ -20,6 +20,6 @@ namespace Domain.Models
         public decimal CreditCardLimit{ get; set;}
         
         [Required]
-        public decimal Funds { get; set; }
+        public decimal InitialFunds { get; set; }
     }
 }
