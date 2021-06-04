@@ -11,7 +11,7 @@ namespace Domain.Models
         public string ClientName { get; set; }
         
         [Required]
-        public int AccountNumber { get; set; }
+        public long AccountNumber { get; set; }
 
         [Required]
         public long CreditCardNumber { get; set; }

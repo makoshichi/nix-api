@@ -7,6 +7,6 @@ namespace NixService.DTOs
 {
     public class DebtAccountDto : BaseAccountDto
     {
-        public int AccountNumber { get; set; }
+        public long AccountNumber { get; set; }
     }
 }

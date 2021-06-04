@@ -6,15 +6,17 @@ namespace Domain.Context
 {
     public class NixContext : DbContext
     {
+
         public NixContext(DbContextOptions<NixContext> options) : base(options)
         {
         }
+        //Comment above for migrations
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             try
             {
-                optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=NixTest;Trusted_Connection=True");
+                optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=NixApi;Trusted_Connection=True");
             }
             catch (Exception e)
             {

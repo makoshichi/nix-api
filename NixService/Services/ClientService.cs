@@ -35,8 +35,9 @@ namespace NixService.Services
 
             await _repository.SaveAsync(client);
 
-            return @$"Conta criada com sucesso. Número: {client.AccountNumber}. Fundos: {client.Funds} \\n 
-                        Cartão de Crédito: {client.CreditCardNumber}. Limite: {client.CreditCardLimit}";
+            return @$"Conta criada com sucesso para o cliente {client.ClientName}.  
+                      Número da Conta: {client.AccountNumber}. Fundos: {client.Funds}  
+                      Cartão de Crédito: {client.CreditCardNumber}. Limite: {client.CreditCardLimit}";
         }
 
         public IEnumerable<ClientDto> GetClients()

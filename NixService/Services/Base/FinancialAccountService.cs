@@ -59,7 +59,7 @@ namespace NixService.Services.Base
             };
         }
 
-        protected abstract Expression<Func<TEntity, bool>> GetPaymentTypeFilter(int serviceNumber);
+        protected abstract Expression<Func<TEntity, bool>> GetPaymentTypeFilter(long paymentMethodNumber);
 
         protected abstract void ValidateOperation(Client client, decimal purchaseValue);
 

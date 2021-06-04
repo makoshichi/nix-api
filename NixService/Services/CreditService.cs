@@ -20,7 +20,7 @@ namespace NixService.Services
         {
         }
 
-        protected override Expression<Func<TEntity, bool>> GetPaymentTypeFilter(int creditCardNumber)
+        protected override Expression<Func<TEntity, bool>> GetPaymentTypeFilter(long creditCardNumber)
         {
             return (x => x.CreditCardNumber == creditCardNumber);
         }
