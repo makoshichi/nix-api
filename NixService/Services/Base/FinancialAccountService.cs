@@ -14,16 +14,16 @@ using System.Threading.Tasks;
 
 namespace NixService.Services.Base
 {
-    public abstract class FinantialAccountService<TEntity, TEntityDto> : IFinancialAccountService<TEntity, TEntityDto>
+    public abstract class FinancialAccountService<TEntity, TEntityDto>
         where TEntity : BaseAccount
         where TEntityDto : BaseAccountDto
     {
         protected IFinancialAccountRepository<TEntity> accountRepository;
-        protected IClientAccountRepository clientAccountRepository;
+        protected IClientRepository clientAccountRepository;
 
         readonly IMapper _mapper;
 
-        public FinantialAccountService(IFinancialAccountRepository<TEntity> accountRepository, IClientAccountRepository clientAccountRepository, IMapper mapper)
+        public FinancialAccountService(IFinancialAccountRepository<TEntity> accountRepository, IClientRepository clientAccountRepository, IMapper mapper)
         {
             this.clientAccountRepository = clientAccountRepository;
             this.accountRepository = accountRepository;

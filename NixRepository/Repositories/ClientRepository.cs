@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace NixRepository.Repositories
 {
-    public class ClientAccountRepository : IClientAccountRepository
+    public class ClientRepository : IClientRepository
     {
         readonly NixContext _context;
 
-        public ClientAccountRepository(NixContext context)
+        public ClientRepository(NixContext context)
         {
             _context = context;
         }

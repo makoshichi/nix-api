@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NixRepository.Repositories
 {
-    public abstract class FinantialAccountRepository<TEntity> : IFinancialAccountRepository<TEntity>
+    public abstract class FinantialAccountRepository<TEntity>
         where TEntity : BaseAccount
     {
 
