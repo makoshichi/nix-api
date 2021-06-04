@@ -34,7 +34,7 @@ namespace NixWeb.Controllers
         }
 
         /// <summary>
-        /// Recupera extrato de crédito de acordo com o filtro de data
+        /// Recupera extrato de débito de acordo com o filtro de data
         /// </summary>
         /// <param name="filter">Encapsula de número do metodo de pagamento e datas inicial e final</param>
         /// <returns>Extrato do período informado</returns>

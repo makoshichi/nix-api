@@ -28,7 +28,7 @@ namespace NixWeb.Controllers
         /// Método para abertura de conta
         /// </summary>
         /// <param name="client">Parametros do cliente</param>
-        /// <returns>Resposta de sucesso</returns>
+        /// <returns>Mensagem de sucesso</returns>
         [HttpPost("OpenAccount")]
         public async Task<IActionResult> OpenAccount([FromBody] ClientDto client)
         {
