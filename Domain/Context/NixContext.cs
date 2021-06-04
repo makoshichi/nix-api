@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Domain.Models;
+using System;
 
 namespace Domain.Context
 {
@@ -7,6 +8,18 @@ namespace Domain.Context
     {
         public NixContext(DbContextOptions<NixContext> options) : base(options)
         {
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            try
+            {
+                optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=NixTest;Trusted_Connection=True");
+            }
+            catch (Exception e)
+            {
+
+            }
         }
 
         public DbSet<Client> Clients { get; set; }

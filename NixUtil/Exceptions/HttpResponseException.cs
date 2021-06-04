@@ -12,6 +12,7 @@ namespace NixUtil.Exceptions
         public HttpResponseException(HttpStatusCode code, string message) : base($"Erro {(int)code}: - {message}")
         {
             StatusCode = code;
+            Value = this;
         }
     }
 }

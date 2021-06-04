@@ -17,9 +17,9 @@ namespace NixWeb.Controllers
         }
 
         [HttpPost]
-        public override async Task<IActionResult> Purchase([FromBody] decimal value, int creditCardNumber, string description)
+        public override async Task<IActionResult> Purchase([FromBody] PurchaseDto purchase)
         {
-            return await base.Purchase(value, creditCardNumber, description);
+            return await base.Purchase(purchase);
         }
 
         [HttpGet("{id}")]

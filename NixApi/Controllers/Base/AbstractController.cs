@@ -21,14 +21,9 @@ namespace NixWeb.Controllers.Base
             this.service = service;
         }
 
-        public virtual async Task<IActionResult> Purchase(decimal value, int chargeMethodNumber, string description)
+        public virtual async Task<IActionResult> Purchase(PurchaseDto purchase)
         {
-            await service.Purchase(new PurchaseDto
-            {
-                Value = value,
-                PaymentMethodNumber = chargeMethodNumber,
-                Description = description
-            });
+            await service.Purchase(purchase);
 
             return Ok("Transação efetuada com sucesso"); // As exceções são gerenciadas pelo HttpResponseExceptionFilter
         }      

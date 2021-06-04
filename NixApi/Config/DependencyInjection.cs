@@ -1,5 +1,6 @@
 ﻿using Domain.Models;
 using Domain.Models.Base;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NixRepository;
 using NixRepository.Repositories;
@@ -15,9 +16,6 @@ namespace NixWeb.Config
     {
         public static void AddScoped(IServiceCollection services)
         {
-            //services.AddScoped<IFinancialAccountService<BaseAccount, BaseAccountDto>, FinantialAccountService<BaseAccount, BaseAccountDto>>();
-            //services.AddScoped<IFinancialAccountRepository<BaseAccount>, AbstractFinantialAccountRepository<BaseAccount>>();
-            //services.AddScoped<IClientAccountRepository, ClientAccountRepository>();
             services.AddScoped<IFinancialAccountService<DebtAccount, DebtAccountDto>, DebtService<DebtAccount, DebtAccountDto>>();
             services.AddScoped<IFinancialAccountService<CreditAccount, CreditAccountDto>, CreditService<CreditAccount, CreditAccountDto>>();
             services.AddScoped<IFinancialAccountRepository<DebtAccount>, DebtAccountRepository<DebtAccount>>();
