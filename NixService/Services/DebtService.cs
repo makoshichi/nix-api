@@ -39,7 +39,7 @@ namespace NixService.Services
             return new TEntity
             {
                 ClientId = client.Id,
-                AccountNumber = purchase.PaymentMethodNumber,
+                //AccountNumber = purchase.PaymentMethodNumber,
                 Description = purchase.Description,
                 PurchaseValue = purchase.Value,
                 PurchaseDate = DateTime.Now
