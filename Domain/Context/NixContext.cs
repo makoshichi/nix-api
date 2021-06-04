@@ -7,6 +7,11 @@ namespace Domain.Context
     public class NixContext : DbContext
     {
 
+        public NixContext() : base()
+        {
+
+        }
+
         public NixContext(DbContextOptions<NixContext> options) : base(options)
         {
         }
