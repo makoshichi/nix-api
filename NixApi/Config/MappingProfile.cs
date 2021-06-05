@@ -9,13 +9,13 @@ namespace NixWeb.Config
         public MappingProfile()
         {
             // Domain to DTO
-            CreateMap<CreditAccount, CreditStatementDto>();
-            CreateMap<DebtAccount, DebtStatementDto>();
+            CreateMap<CreditAccount, CreditAccountDto>();
+            CreateMap<DebtAccount, DebtAccountDto>();
             CreateMap<Client, ClientDto>();
 
             // DTO to Domain
-            CreateMap<CreditStatementDto, CreditAccount>();
-            CreateMap<DebtStatementDto, DebtAccount>();
+            CreateMap<CreditAccountDto, CreditAccount>();
+            CreateMap<DebtAccountDto, DebtAccount>();
             CreateMap<ClientDto, ClientDto>();
         }
     }

@@ -1,41 +1,37 @@
 ﻿using Domain.Models.Base;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using NixService;
 using NixService.DTOs;
 using NixService.DTOs.Base;
+using System;
 using System.Threading.Tasks;
 
 namespace NixWeb.Controllers.Base
 {
     public abstract class AbstractController<TEntity, TEntityDto> : ControllerBase 
-        where TEntity : BaseAccount
-        where TEntityDto : BaseStatementDto
+        where TEntity : BaseFinancialAccount
+        where TEntityDto : BaseFinancialAccountDto
     {
 
-        protected IStatementService<TEntity, TEntityDto> service;
+        protected IFinancialAccountService<TEntity, TEntityDto> service;
 
-        public AbstractController(IStatementService<TEntity, TEntityDto> service) : base()
+        public AbstractController(IFinancialAccountService<TEntity, TEntityDto> service) : base()
         {
             this.service = service;
         }
 
-        public virtual async Task<IActionResult> Purchase(decimal value, int chargeMethodNumber, string description)
+        public virtual async Task<IActionResult> Purchase(PurchaseDto purchase)
         {
-            await service.Purchase(new PurchaseDto
-            {
-                Value = value,
-                ChargeMethodNumber = chargeMethodNumber,
-                Description = description
-            });
+            await service.Purchase(purchase);
 
             return Ok("Transação efetuada com sucesso"); // As exceções são gerenciadas pelo HttpResponseExceptionFilter
         }      
 
-        public virtual IActionResult GetStatement(int accountNumber)
+        public virtual async Task<IActionResult> GetStatement(StatementFilterDto filter)
         {
-            //var result = JsonConvert.SerializeObject(_context.Set<TEntity>().Where(x => x.AccountNumber == accountNumber).Select(x => x));
-            //return Ok(result);
-            return Ok();
+            var response = JsonConvert.SerializeObject(await service.GetStatement(filter)); 
+            return Ok(response);
         }
     }
 }

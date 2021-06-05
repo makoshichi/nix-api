@@ -7,24 +7,41 @@ using System.Threading.Tasks;
 
 namespace NixWeb.Controllers
 {
+    /// <summary>
+    /// Controller para execução de compras e emissão de extrato na modalidade débito
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class DebtController : AbstractController<DebtAccount, DebtStatementDto>
+    public class DebtController : AbstractController<DebtAccount, DebtAccountDto>
     {
-        public DebtController(IStatementService<DebtAccount, DebtStatementDto> service) : base(service)
+        /// <summary>
+        /// Construtor padrão
+        /// </summary>
+        /// <param name="service">Interface para serviços relacionados a operações de débito</param>
+        public DebtController(IFinancialAccountService<DebtAccount, DebtAccountDto> service) : base(service)
         {
         }
 
-        [HttpPost]
-        public override async Task<IActionResult> Purchase([FromBody] decimal value, int accountNumber, string description)
+        /// <summary>
+        /// Executa uma compra no débito
+        /// </summary>
+        /// <param name="purchase">Encapsula número do método de pagamento, valor da compra e descrição. Todos os campos são obrigatórios.</param>
+        /// <returns>Mensagem de Sucesso</returns>
+        [HttpPost("Purchase")]
+        public override async Task<IActionResult> Purchase([FromBody] PurchaseDto purchase)
         {
-            return await base.Purchase(value, accountNumber, description);
+            return await base.Purchase(purchase);
         }
 
-        [HttpGet("{id}")]
-        public override IActionResult GetStatement(int accountNumber)
+        /// <summary>
+        /// Recupera extrato de débito de acordo com o filtro de data
+        /// </summary>
+        /// <param name="filter">Encapsula de número do metodo de pagamento e datas inicial e final. Todos os campos são obrigatórios.</param>
+        /// <returns>Extrato do período informado</returns>
+        [HttpPost("GetStatement")]
+        public override async Task<IActionResult> GetStatement([FromBody] StatementFilterDto filter)
         {
-            return base.GetStatement(accountNumber);
+            return await base.GetStatement(filter);
         }
     }
 }
