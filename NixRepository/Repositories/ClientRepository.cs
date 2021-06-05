@@ -1,5 +1,4 @@
 ﻿using Domain.Models;
-using Domain.Models.Base;
 using Microsoft.EntityFrameworkCore;
 using Domain.Context;
 using NixUtil.Exceptions;
@@ -9,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Net;
+using Microsoft.Data.SqlClient;
 
 namespace NixRepository.Repositories
 {
@@ -23,24 +23,36 @@ namespace NixRepository.Repositories
 
         public async Task<Client> GetClient(Expression<Func<Client, bool>> paymentMethodExpression)
         {
-            var client = await _context.Clients.Where(paymentMethodExpression).FirstOrDefaultAsync();
+            Client client;
+            try
+            {
+                client = await _context.Clients.Where(paymentMethodExpression).FirstOrDefaultAsync();
+            }
+            catch (SqlException)
+            {
+                throw new SqlCommFailureHttp500Exception();
+            }
 
             if (client == null)
-                throw new HttpResponseException(System.Net.HttpStatusCode.NotFound, "Método de pagamento não encontrado para o cliente.");
+                throw new HttpResponseException(HttpStatusCode.NotFound, "Método de pagamento não encontrado para o cliente.");
 
             return client;
         }
 
         public async Task SaveAsync(Client client)
         {
+            var exists = await _context.Clients.AnyAsync(x => x.CreditCardNumber == client.CreditCardNumber || x.AccountNumber == client.AccountNumber);
+            if (exists)
+                throw new HttpResponseException(HttpStatusCode.BadRequest, "Número de conta ou cartão de crédito já existente.");
+
             try
             {
                 _context.Add(client);
                 await _context.SaveChangesAsync();
             }
-            catch (Exception)
+            catch (SqlException)
             {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError, "Falha de comunicação com o banco de dados.");
+                throw new SqlCommFailureHttp500Exception();
             }
         }
 
@@ -50,15 +62,22 @@ namespace NixRepository.Repositories
             {
                 return await _context.Clients.Where(x => x.Id == clientId).Select(x => x).FirstOrDefaultAsync();
             }
-            catch (Exception)
+            catch (SqlException)
             {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError, "Falha na comunicação com o banco de dados.");
+                throw new SqlCommFailureHttp500Exception();
             }
         }
 
         public IEnumerable<Client> GetClients()
         {
-            return _context.Clients;
+            try
+            {
+                return _context.Clients;
+            }
+            catch (SqlException)
+            {
+                throw new SqlCommFailureHttp500Exception();
+            }
         }
     }
 }
