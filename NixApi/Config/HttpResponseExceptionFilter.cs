@@ -18,7 +18,7 @@ namespace NixWeb.Config
         {
             if (context.Exception is HttpResponseException exception)
             {
-                context.Result = new ObjectResult(exception.Value)
+                context.Result = new ObjectResult(exception.Message)
                 {
                     StatusCode = (int)exception.StatusCode,
                 };

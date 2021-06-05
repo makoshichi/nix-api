@@ -1,11 +1,11 @@
 ﻿using Domain.Models.Base;
-using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Models
 {
-    public class DebtAccount : BaseAccount
+    [Table("DebtStatement")]
+    public class DebtAccount : BaseFinancialAccount
     {
-        [Required]
-        public int AccountNumber { get; set; }
+
     }
 }
