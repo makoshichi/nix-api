@@ -14,8 +14,8 @@ namespace NixWeb.Config
         {
             services.AddScoped<IFinancialAccountService<DebtAccount, DebtAccountDto>, DebtService<DebtAccount, DebtAccountDto>>();
             services.AddScoped<IFinancialAccountService<CreditAccount, CreditAccountDto>, CreditService<CreditAccount, CreditAccountDto>>();
-            services.AddScoped<IFinancialAccountRepository<DebtAccount>, DebtAccountRepository<DebtAccount>>();
-            services.AddScoped<IFinancialAccountRepository<CreditAccount>, CreditAccountRepository<CreditAccount>>();
+            services.AddScoped<IFinancialAccountRepository<DebtAccount>, FinantialAccountRepository<DebtAccount>>();
+            services.AddScoped<IFinancialAccountRepository<CreditAccount>, FinantialAccountRepository<CreditAccount>>();
             services.AddScoped<IClientService, ClientService>();
             services.AddScoped<IClientRepository, ClientRepository>();
         }
