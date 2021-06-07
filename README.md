@@ -36,4 +36,4 @@ Devido a problemas na configuração do meu ambiente para gerar migrations, esta
 2) Rodar API (Visual Studio 2019)
 -> Selecionar NixWeb como projeto inicial no Solution Explorer
 -> Executar (F5). Projeto configurado para usar o IIS Express
-API está rodando em http://localhost:44326 (a navegação será redirecionada direto ao swagger ao executar o projeto)
+API está rodando em http://localhost:44326 (a navegação será redirecionada direto ao swagger ao executar o projeto). A porta pode ser alterada no arquivo launchSettings.json caso necessário
