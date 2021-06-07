@@ -20,7 +20,7 @@ Rodando a aplicação:
 1) Gerar e atualizar banco de dados com migrations
 Visual Studio 2019
 - Selecionar projeto Domain como inicial no Solution Explorer
-(PM):
+- No Package Manager Console
 -> Selecionar projeto Domain
 -> Add-Migration <nome-migration>
 -> Update-Database
