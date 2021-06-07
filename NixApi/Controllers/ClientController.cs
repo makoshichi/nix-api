@@ -44,7 +44,7 @@ namespace NixWeb.Controllers
         [HttpGet("GetClients")]
         public IActionResult GetClients()
         {
-            var response = JsonConvert.SerializeObject(_service.GetClients());
+            var response = _service.GetClients();
             return Ok(response);
         }
     }
