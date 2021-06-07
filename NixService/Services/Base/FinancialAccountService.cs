@@ -65,13 +65,11 @@ namespace NixService.Services.Base
 
         protected abstract void ValidateOperation(Client client, decimal? purchaseValue);
 
-        //protected abstract TEntity CreateEntry(Client client, PurchaseDto purchase);
         private TEntity CreateEntry(Client client, PurchaseDto purchase)
         {
             return new TEntity
             {
                 ClientId = client.Id,
-                //CreditCardNumber = purchase.PaymentMethodNumber,
                 Description = purchase.Description,
                 PurchaseValue = purchase.Value.Value,
                 PurchaseDate = DateTime.Now
