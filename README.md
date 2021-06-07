@@ -22,12 +22,12 @@ Visual Studio 2019
 - Selecionar projeto Domain como inicial no Solution Explorer
 - No Package Manager Console
 -> Selecionar projeto Domain
--> Add-Migration <nome-migration>
+-> Add-Migration NomeMigration
 -> Update-Database
 
 Visual Studio Code/CLI
 - navegar até a pasta do projeto Domain
--> dotnet ef migrations add <nome-migration>
+-> dotnet ef migrations add NomeMigration>
 -> dotnet ef database update
 
 OBS: DefaultConnection está definida como "Server=localhost\\SQLEXPRESS;Database=NixApi;Trusted_Connection=True"
