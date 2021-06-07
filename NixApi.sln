@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NixWeb", "NixApi\NixWeb.csproj", "{184AE8B5-5302-4ECD-8B82-E3C892500F9B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NixWebApi", "NixApi\NixWebApi.csproj", "{184AE8B5-5302-4ECD-8B82-E3C892500F9B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NixService", "NixService\NixService.csproj", "{F1364480-5F76-49B1-A5A8-BE3757F2A2EE}"
 EndProject
