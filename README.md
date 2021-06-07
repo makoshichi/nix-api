@@ -17,7 +17,7 @@ Os endpoints disponíveis, bem como exemplos de como formatar o objeto JSON para
 
 Rodando a aplicação:
 
-1) Gerar e atualizar banco de dados com migrations
+1) Gerar banco de dados com migrations
 Visual Studio 2019
 - Selecionar projeto Domain como inicial no Solution Explorer
 - No Package Manager Console
@@ -34,6 +34,6 @@ OBS: DefaultConnection está definida como "Server=localhost\\SQLEXPRESS;Databas
 Devido a problemas na configuração do meu ambiente para gerar migrations, esta string reside no arquivo appsettings.json mas também está explicitada na classe NixContext dentro do projeto Domain da solution.
 
 2) Rodar API (Visual Studio 2019)
--> Selecionar NixWeb como projeto inicial no Solution Explorer
+-> Selecionar NixWebApi como projeto inicial no Solution Explorer
 -> Executar (F5). Projeto configurado para usar o IIS Express
 API está rodando em http://localhost:44326 (a navegação será redirecionada direto ao swagger ao executar o projeto). A porta pode ser alterada no arquivo launchSettings.json caso necessário
