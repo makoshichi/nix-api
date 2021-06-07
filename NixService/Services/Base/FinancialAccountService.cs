@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace NixService.Services.Base
 {
     public abstract class FinancialAccountService<TEntity, TEntityDto>
-        where TEntity : BaseFinancialAccount
+        where TEntity : BaseFinancialAccount, new()
         where TEntityDto : BaseFinancialAccountDto
     {
         protected IFinancialAccountRepository<TEntity> accountRepository;
@@ -65,7 +65,18 @@ namespace NixService.Services.Base
 
         protected abstract void ValidateOperation(Client client, decimal? purchaseValue);
 
-        protected abstract TEntity CreateEntry(Client client, PurchaseDto purchase);
+        //protected abstract TEntity CreateEntry(Client client, PurchaseDto purchase);
+        private TEntity CreateEntry(Client client, PurchaseDto purchase)
+        {
+            return new TEntity
+            {
+                ClientId = client.Id,
+                //CreditCardNumber = purchase.PaymentMethodNumber,
+                Description = purchase.Description,
+                PurchaseValue = purchase.Value.Value,
+                PurchaseDate = DateTime.Now
+            };
+        }
 
         protected abstract (decimal Initial, decimal Final) ComputeStatementFunds(Client client, decimal initialValue, decimal finalValue);
 

@@ -34,18 +34,6 @@ namespace NixService.Services
                 throw new HttpResponseException(HttpStatusCode.Unauthorized, "Transação não autorizada");
         }
 
-        protected override TEntity CreateEntry(Client client, PurchaseDto purchase)
-        {
-            return new TEntity
-            {
-                ClientId = client.Id,
-                //AccountNumber = purchase.PaymentMethodNumber,
-                Description = purchase.Description,
-                PurchaseValue = purchase.Value.Value,
-                PurchaseDate = DateTime.Now
-            };
-        }
-
         protected override (decimal Initial, decimal Final) ComputeStatementFunds(Client client, decimal initialValue, decimal finalValue)
         {
             return (client.InitialFunds - initialValue, client.InitialFunds - finalValue);

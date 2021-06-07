@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Domain.Models;
-using System;
+using Microsoft.Extensions.Configuration;
 
 namespace Domain.Context
 {
@@ -19,15 +19,7 @@ namespace Domain.Context
         // Adicionado para "contornar rapidamente" problema que tive para gerar migrations
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            try
-            {
-                //Get connection string from somewhere else
-                optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=NixApi;Trusted_Connection=True");
-            }
-            catch (Exception e)
-            {
-
-            }
+            optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=NixApi;Trusted_Connection=True");
         }
 
         public DbSet<Client> Clients { get; set; }
