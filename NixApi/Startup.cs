@@ -34,12 +34,7 @@ namespace NixWeb
 
             DependencyInjection.AddScoped(services);
 
-            //services.AddControllers(options => 
-            //    options.Filters.Add(new HttpResponseExceptionFilter())).AddFluentValidation(
-            //        o =>
-            //        {
-            //            o.RegisterValidatorsFromAssemblyContaining<ClientDtoValidator>();
-            //        });
+            services.AddCors();
 
             services.AddControllers(options =>
                 options.Filters.Add(new HttpResponseExceptionFilter())).AddFluentValidation();
@@ -69,6 +64,12 @@ namespace NixWeb
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true)
+                .AllowCredentials());
 
             app.UseAuthorization();
 
