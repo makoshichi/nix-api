@@ -8,7 +8,7 @@ Foi optado por implementar um endpoint para criar usuários. Nome é o único ca
 
 Caso um número da conta tente ser usado como número de cartão de crédito, ou vice-versa, o sistema apresentará uma mensagem de erro. 
 
-Um filtro de data também foi implementado. O requisito dizia apenas filtro por crédito ou débito, mas sem data, fundos iniciais ou limite de cartão, a implementação das regras não ficavam muito condizentes.
+Um filtro de data também foi implementado. O requisito dizia apenas filtro por crédito ou débito, mas sem data, fundos iniciais ou limite de cartão, a implementação das regras bancárias não ficavam muito claras.
 
 Os campos de número de cartão, data inicial e data final foram validados com o FluentValidator do ASP.NET Core, em casos utilizando-o "out of the box", mas também foi necessário criar algumas regras customizadas, portanto não há uma padronização das mensagens de erro/validação (algumas estão em português e outras em inglês)
 
