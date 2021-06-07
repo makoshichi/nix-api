@@ -31,6 +31,7 @@ Visual Studio Code/CLI
 -> dotnet ef database update
 
 OBS: DefaultConnection está definida como "Server=localhost\\SQLEXPRESS;Database=NixApi;Trusted_Connection=True"
+Devido a problemas na configuração do meu ambiente para gerar migrations, esta string reside no arquivo appsettings.json mas também está explicitada na classe NixContext dentro do projeto Domain da solution.
 
 2) Rodar API (Visual Studio 2019)
 -> Selecionar NixWeb como projeto inicial no Solution Explorer
