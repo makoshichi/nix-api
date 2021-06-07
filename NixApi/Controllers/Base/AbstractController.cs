@@ -30,7 +30,7 @@ namespace NixWeb.Controllers.Base
 
         public virtual async Task<IActionResult> GetStatement(StatementFilterDto filter)
         {
-            var response = JsonConvert.SerializeObject(await service.GetStatement(filter)); 
+            var response = await service.GetStatement(filter); 
             return Ok(response);
         }
     }
